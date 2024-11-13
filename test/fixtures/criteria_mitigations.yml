@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  criteria_id: one
+  mitigation_type: 1
+  description: MyString
+
+two:
+  title: MyString
+  criteria_id: two
+  mitigation_type: 1
+  description: MyString

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  criteriable_id: 
+  criteriable_type: MyString
+  description: MyString
+
+two:
+  title: MyString
+  criteriable_id: 
+  criteriable_type: MyString
+  description: MyString
