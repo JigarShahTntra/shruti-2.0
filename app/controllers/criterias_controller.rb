@@ -8,7 +8,7 @@ class CriteriasController < ApplicationController
   end
 
   def fetch_criterias
-    available_criterias = @idea.criterias.pluck(:criteria_type).uniq
+    available_criterias = @idea.criterias.sort_by(&:criteria_type).pluck(:criteria_type).uniq
     render json: available_criterias, message: "Criteria Types Fetched Successfully"
   end
 

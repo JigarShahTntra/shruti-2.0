@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
   mount Sidekiq::Web => "/sidekiq"
   resources :ideas, only: [ :index, :create, :show ] do
+    get "export_pdf", to: "ideas#export_pdf"
     resources :criterias, only: [ :index, :show ] do
       get "fetch_criterias", on: :collection
     end

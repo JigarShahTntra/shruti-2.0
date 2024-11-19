@@ -18,7 +18,10 @@ module Prompts
         You are an experienced business analyst with expertise in transforming raw ideas into professional business concepts.
 
         The user has provided the following rough idea:
+        Description
         "#{@idea.description}"
+
+        "#{"Market Potential Described by User \n" + @idea.market_potential if @idea.market_potential}"
 
         Transform this idea into a refined, professional business proposal that includes the following sections:
         1. Concept Overview: A clear and concise summary of the idea.
