@@ -6,6 +6,11 @@ class Idea < ApplicationRecord
   after_save :ellaborate_idea, if: -> { !description_previous_change.nil? || !market_potential_previous_change.nil? }
   after_save :run_market_gate, if: -> { !ellaboration_previous_change.nil? }
 
+  def criteria_type_with_rating
+    criterias.uniq(&:criteria_type).sort_by(&:criteria_type).map do |criteria|
+      { name: criteria.criteria_type, rating: criteria.rating }
+    end
+  end
   private
 
   def create_history

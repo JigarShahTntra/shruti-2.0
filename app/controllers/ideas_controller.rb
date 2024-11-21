@@ -51,6 +51,6 @@ class IdeasController < ApplicationController
   end
 
   def set_idea
-    @idea = Idea.find_by(id: params[:id] || params[:idea_id])
+    @idea = Idea.find_by(tid: params[:id] || params[:idea_id])
   end
 end

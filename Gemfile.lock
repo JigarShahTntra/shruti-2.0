@@ -132,6 +132,7 @@ GEM
       timeout
     net-smtp (0.5.0)
       net-protocol
+    news-api (0.2.0)
     nio4r (2.7.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
@@ -257,6 +258,7 @@ DEPENDENCIES
   matrix
   mina
   mina-puma!
+  news-api
   pg (~> 1.1)
   pry
   puma (>= 5.0)

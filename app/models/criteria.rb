@@ -7,7 +7,7 @@ class Criteria < ApplicationRecord
   enum :criteria_type, { market_demand: 0, competetive_landscape: 1, customer_acceptance: 2, market_entry_barriers: 3, revenue_potential_forecast: 4 }
 
 
-  def ranking
-    Rand.number(1..5)
+  def rating
+    Random.rand(1..5.0).round(1)
   end
 end
