@@ -137,5 +137,8 @@ module Prompts
         Please structure the analysis in a professional format with detailed explanations for each projection, and ensure all data points are logically reasoned or supported by market assumptions.
       PROMPT
     end
+
+    def global_and_local_trends
+    end
   end
 end
