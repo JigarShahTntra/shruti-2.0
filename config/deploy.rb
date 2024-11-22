@@ -15,7 +15,7 @@ require "mina/puma"
 #   branch       - Branch name to deploy. (needed by mina/git)
 
 set :application_name, "shruti-2.0"
-set :domain, "34.223.140.192"
+set :domain, "ai.tntra.io"
 set :deploy_to, "/home/ubuntu/shruti-2.0"
 set :repository, "git@github.com:JigarShahTntra/shruti-2.0.git"
 set :branch, "master"
