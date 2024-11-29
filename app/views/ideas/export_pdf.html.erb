@@ -7,7 +7,6 @@
     h1 { text-align: center; font-size: 24px; }
     h2 { font-size: 18px; }
     p { font-size: 14px; }
-    .content { margin: 0 auto; width: 80%; }
     footer{
         -webkit-font-smoothing: antialiased;
         text-size-adjust: 100%;
@@ -28,35 +27,113 @@
         margin: 0px 0px 0 0;
         padding: 0px auto
     }
+    table {
+        --rem: 16;
+        white-space: normal;
+        -webkit-text-size-adjust: 100%;
+        color: #1f2328;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        border-spacing: 0;
+        border-collapse: collapse;
+        display: block;
+        width: max-content;
+        max-width: 100%;
+        overflow: auto;
+        margin-top: 0;
+        margin-bottom: 0 !important;
+    }
+    thead {
+        --rem: 16;
+        white-space: normal;
+        -webkit-text-size-adjust: 100%;
+        color: #1f2328;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+    tr {
+        --rem: 16;
+        white-space: normal;
+        -webkit-text-size-adjust: 100%;
+        color: #1f2328;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        border-spacing: 0;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-top: 1px solid #d0d7deb3;
+    }
+    th {
+        --rem: 16;
+        white-space: normal;
+        -webkit-text-size-adjust: 100%;
+        color: #1f2328;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        border-spacing: 0;
+        border-collapse: collapse;
+        font-weight: 600;
+        padding: 6px 13px;
+        border: 1px solid #d0d7de;
+    }
+    tbody {
+        --rem: 16;
+        white-space: normal;
+        -webkit-text-size-adjust: 100%;
+        color: #1f2328;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+    td {
+        --rem: 16;
+        white-space: normal;
+        -webkit-text-size-adjust: 100%;
+        color: #1f2328;
+        font-size: 16px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        border-spacing: 0;
+        border-collapse: collapse;
+        padding: 6px 13px;
+        border: 1px solid #d0d7de;
+    }
   </style>
 </head>
 <body>
   <div class="content">
-    <h1>Market Gate Analysis Report</h1>
+    <h1><%= stage_gate.keys.first.to_s %> Report</h1>
     <h2><strong>Innovation Title : <%= idea_data["title"] %></strong></h2>
     <h2><strong>Describe Your Innovation :</strong></h2>
     <div><%= idea_data["description"] %></div>
+    <% Idea::DESCRIPTIVE_FIELDS.each do |field| %>
+        <h2><strong> <%= field.humanize %> :</strong></h2>
+        <div><%= idea_data[field.to_s] %></div>
+    <% end %>
     <div>
         <h3>AI Collated Innovation</h3>
         <div>
-            <%= idea_data["ellaboration"].html_safe %>
+            <%= idea_data["elaboration"].html_safe %>
         </div>
     </div>
-    <div>
-        <% criterias_data.each do |criteria| %>
+    <hr>
+    <% stage_gate.each do |name, parameters| %>
+        <% parameters.each do |param_hash|%>
             <hr>
-            <h3><%= "#{criteria["criteria_type"].humanize} Analysis" %></h3>
-            <div>
-                <%= criteria["description"].html_safe %>
-            </div>
+            <% param_hash.each do |k, val|%>
+                <%= val&.html_safe %>
+            <% end %>
             <hr>
-            <h3><%= criteria[:criteria_mitigations]["title"] %></h3>
-            <div>
-                <%= criteria[:criteria_mitigations]["description"].html_safe %>
-            </div>
         <% end %>
-    </div>
-  </div>
+    <% end %>
 </body>
 <footer class="footer">
 <div class="inner-footer">

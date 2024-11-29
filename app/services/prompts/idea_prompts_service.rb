@@ -1,7 +1,11 @@
 module Prompts
-  class IdeaPromptsService < BasePromptsService
-    def ellaborate
-      conversation_json << { "role": "user", "content": ellaborate_prompt }
+  class IdeaPromptsService
+    def initialize(idea_id)
+      @idea = Idea.find_by(id: idea_id)
+    end
+
+    def elaborate
+      conversation_json << { "role": "user", "content": elaborate_prompt }
     end
 
     private
@@ -13,7 +17,7 @@ module Prompts
     end
 
 
-    def ellaborate_prompt
+    def elaborate_prompt
       <<~PROMPT
         You are an experienced business analyst with expertise in transforming raw ideas into professional business concepts.
 
@@ -21,7 +25,7 @@ module Prompts
         Description
         "#{@idea.description}"
 
-        "#{"Market Potential Described by User \n" + @idea.market_potential if @idea.market_potential.length > 5}"
+        "#{described_fields}"
 
         Transform this idea into a refined, professional business proposal that includes the following sections:
         1. Concept Overview: A clear and concise summary of the idea.
@@ -32,6 +36,12 @@ module Prompts
 
         Structure the response so that it reads clearly and professionally, as though prepared by a seasoned business analyst.
       PROMPT
+    end
+
+    def described_fields
+      Idea::DESCRIPTIVE_FIELDS.map do |field|
+        "#{field.humanize} described by user \n " + @idea.send(field) if @idea.send(field).present? && @idea.send(field).length > 5
+      end.compact.join("\n")
     end
   end
 end

@@ -1,28 +1,24 @@
 class Idea < ApplicationRecord
-  has_many :idea_histories, dependent: :destroy
-  has_many :idea_conversations, as: :idea_conversationable, dependent: :destroy
-  has_many :criterias, dependent: :destroy
-  before_update :create_history
-  after_save :ellaborate_idea, if: -> { !description_previous_change.nil? || !market_potential_previous_change.nil? }
-  after_save :run_market_gate, if: -> { !ellaboration_previous_change.nil? }
+  DESCRIPTIVE_FIELDS = %w[market_potential intellectual_property_potential technology_requirements compliance_aspect business_model]
+  has_many :idea_stage_gates
+  has_many :stage_gates, through: :idea_stage_gates
+  has_many :conversations, as: :conversationable, dependent: :destroy
+  after_save :elaborate_idea, if: -> { !description_previous_change.nil? || !market_potential_previous_change.nil? || !intellectual_property_potential_previous_change.nil? || !technology_requirements_previous_change.nil? || !compliance_aspect_previous_change.nil? || !business_model_previous_change.nil? }
+  after_save :run_gates, if: -> { !elaboration_previous_change.nil? }
 
-  def criteria_type_with_rating
-    criterias.uniq(&:criteria_type).sort_by(&:criteria_type).map do |criteria|
-      { name: criteria.criteria_type, rating: criteria.rating }
-    end
+  def business_model_description
+    idea_stage_gates.includes(:stage_gate).find_by(stage_gate: { name: "Market Risk Estimation" }).idea_parameter_details.includes(:stage_gate_parameter).find_by(stage_gate_parameter: { name: "Market Demand Analysis" })
   end
+
   private
 
-  def create_history
-    self.idea_histories.create(description: self.description)
+  def elaborate_idea
+    ElaborateIdeaJob.perform_async(self.id)
   end
 
-
-  def ellaborate_idea
-    EllaborateIdeaJob.perform_async(self.id)
-  end
-
-  def run_market_gate
-    MarketGateJob.perform_async(self.id)
+  def run_gates
+    StageGate.all.each do |stage_gate|
+      StageGateJob.perform_async(self.id, stage_gate.id)
+    end
   end
 end

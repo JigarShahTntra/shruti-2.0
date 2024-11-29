@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stage_gate: one
+  name: MyString
+  prompt: MyString
+
+two:
+  stage_gate: two
+  name: MyString
+  prompt: MyString
