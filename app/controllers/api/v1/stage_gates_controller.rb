@@ -2,7 +2,7 @@ class Api::V1::StageGatesController < ::ApplicationController
   before_action :set_idea
   before_action :set_idea_stage_gate, only: [ :show ]
   def index
-    render json: @idea.stage_gates, message: "Stage Gates Fetched Successfully"
+    render json: @idea.idea_stage_gates, message: "Stage Gates Fetched Successfully"
   end
 
   def show

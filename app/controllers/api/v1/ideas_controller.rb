@@ -59,7 +59,7 @@ class Api::V1::IdeasController < ::ApplicationController
   end
 
   def stage_gates
-    render json: @idea.stage_gates, message: "Stage Gates Fetched Successfully."
+    render json: @idea.idea_stage_gates, message: "Stage Gates Fetched Successfully."
   end
 
   private
