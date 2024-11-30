@@ -18,7 +18,7 @@ set :application_name, "shruti-2.0"
 set :domain, "34.223.140.192"
 set :deploy_to, "/home/ubuntu/shruti-2.0"
 set :repository, "git@github.com:JigarShahTntra/shruti-2.0.git"
-set :branch, "master"
+set :branch, "new-master"
 set :shared_dirs, fetch(:shared_dirs, []).push("log", "tmp/pids", "tmp/sockets", "public/uploads")
 set :shared_files, fetch(:shared_files, []).push("config/database.yml", "config/master.key", "config/puma.rb")
 set :user, "ubuntu"

@@ -11,11 +11,16 @@ Rails.application.routes.draw do
     username == "jigar" && password == "123456"
   end
   mount Sidekiq::Web => "/sidekiq"
-  resources :ideas, only: [ :index, :create, :show ] do
-    get "export_pdf", to: "ideas#export_pdf"
-    #   resources :criterias, only: [ :index, :show ] do
-    #     get "fetch_criterias", on: :collection
-    #   end
+  namespace :api do
+    namespace :v1 do
+      resources :ideas, only: [ :index, :create, :show ] do
+        get "export_pdf", to: "ideas#export_pdf"
+        resources :stage_gates
+        #   resources :criterias, only: [ :index, :show ] do
+        #     get "fetch_criterias", on: :collection
+        #   end
+      end
+    end
   end
   # get "/ideas/:idea_id/criterias/:criteria_type/show", to: "criterias#show", as: "idea_criteria_show"
   # get "/ideas/:idea_id/criterias/:criteria_type/graphs", to: "graphs#index"

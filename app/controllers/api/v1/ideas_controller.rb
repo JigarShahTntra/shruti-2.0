@@ -1,8 +1,8 @@
 require "redcarpet"
 require "zip"
 
-class IdeasController < ApplicationController
-  before_action :set_idea, only: [ :show, :export_pdf ]
+class Api::V1::IdeasController < ::ApplicationController
+  before_action :set_idea, only: [ :show, :export_pdf, :stage_gates ]
 
   def create
     idea = Idea.new(idea_params)
@@ -56,6 +56,10 @@ class IdeasController < ApplicationController
   ensure
     zipfile.close
     zipfile.unlink
+  end
+
+  def stage_gates
+    render json: @idea.stage_gates, message: "Stage Gates Fetched Successfully."
   end
 
   private
