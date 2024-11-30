@@ -7,7 +7,7 @@ class IdeaStageGate < ApplicationRecord
   delegate :name, to: :stage_gate, prefix: false
 
   def self.find_by_cname(cname)
-    joins(:stage_gate).where("LOWER(REPLACE(stage_gates.name, ' ', '_')) = ?", StageGate.first.cname).last
+    joins(:stage_gate).where("LOWER(REPLACE(stage_gates.name, ' ', '_')) = ?", cname).last
   end
 
   def total_rating
