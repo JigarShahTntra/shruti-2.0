@@ -5,7 +5,7 @@ class IdeaParameterDetail < ApplicationRecord
   has_many :conversations, as: :conversationable, dependent: :destroy
   has_one :rating, as: :rateable, dependent: :destroy
   has_one :idea_parameter_recommendation_detail, dependent: :destroy
-
+  has_many :idea_parameter_graphs, dependent: :destroy
   delegate :name, to: :stage_gate_parameter, prefix: false
 
   def find_or_create_idea_parameter_recommendation_detail(attributes = {})
@@ -14,6 +14,10 @@ class IdeaParameterDetail < ApplicationRecord
 
   def name
     stage_gate_parameter.name
+  end
+
+  def cname
+    stage_gate_parameter.cname
   end
 
   def risk_score

@@ -57,10 +57,14 @@ class StageGateJob
         puts "=========== Idea Parameter Updation Started =========== \n\n"
         idea_parameter.update(description:)
         puts "=========== Idea Parameter Updation Completed =========== \n\n"
-        
+
         puts "=========== Idea Parameter Rating Started =========== \n\n"
         RatingJob.perform_async(idea_parameter.id, "IdeaParameterDetail")
         puts "=========== Idea Parameter Rating Completed =========== \n\n"
+
+        puts "=========== Graph Generation Started =========== \n\n"
+        GraphGenerationJob.perform_async(idea_parameter.id)
+        puts "=========== Graph Generation Completed =========== \n\n"
       end
 
       puts "=========== #{stage_gate_parameter.name} Parameter Processing Completed =========== \n\n"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_29_051928) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_30_111611) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_29_051928) do
     t.index ["idea_id"], name: "index_idea_parameter_details_on_idea_id"
     t.index ["idea_stage_gate_id"], name: "index_idea_parameter_details_on_idea_stage_gate_id"
     t.index ["stage_gate_parameter_id"], name: "index_idea_parameter_details_on_stage_gate_parameter_id"
+  end
+
+  create_table "idea_parameter_graphs", force: :cascade do |t|
+    t.bigint "stage_gate_parameter_graph_id", null: false
+    t.jsonb "body"
+    t.bigint "idea_parameter_detail_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_parameter_detail_id"], name: "index_idea_parameter_graphs_on_idea_parameter_detail_id"
+    t.index ["stage_gate_parameter_graph_id"], name: "index_idea_parameter_graphs_on_stage_gate_parameter_graph_id"
   end
 
   create_table "idea_parameter_recommendation_details", force: :cascade do |t|
@@ -88,6 +98,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_29_051928) do
     t.index ["rateable_type", "rateable_id"], name: "index_ratings_on_rateable"
   end
 
+  create_table "stage_gate_parameter_graphs", force: :cascade do |t|
+    t.bigint "stage_gate_parameter_id", null: false
+    t.string "prompt"
+    t.jsonb "response_format"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stage_gate_parameter_id"], name: "index_stage_gate_parameter_graphs_on_stage_gate_parameter_id"
+  end
+
   create_table "stage_gate_parameters", force: :cascade do |t|
     t.bigint "stage_gate_id", null: false
     t.string "name"
@@ -108,10 +127,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_29_051928) do
   add_foreign_key "idea_parameter_details", "idea_stage_gates"
   add_foreign_key "idea_parameter_details", "ideas"
   add_foreign_key "idea_parameter_details", "stage_gate_parameters"
+  add_foreign_key "idea_parameter_graphs", "idea_parameter_details"
+  add_foreign_key "idea_parameter_graphs", "stage_gate_parameter_graphs"
   add_foreign_key "idea_parameter_recommendation_details", "idea_parameter_details"
   add_foreign_key "idea_parameter_recommendation_details", "parameter_recommendations"
   add_foreign_key "idea_stage_gates", "ideas"
   add_foreign_key "idea_stage_gates", "stage_gates"
   add_foreign_key "parameter_recommendations", "stage_gate_parameters"
+  add_foreign_key "stage_gate_parameter_graphs", "stage_gate_parameters"
   add_foreign_key "stage_gate_parameters", "stage_gates"
 end
