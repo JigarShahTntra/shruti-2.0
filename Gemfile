@@ -21,6 +21,7 @@ gem "active_model_serializers"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 gem "rubyzip"
+gem "kramdown"
 gem "mina", require: false
 gem "mina-puma", require: false,  github: "untitledkingdom/mina-puma"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
