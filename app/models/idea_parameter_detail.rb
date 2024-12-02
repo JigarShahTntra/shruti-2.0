@@ -24,6 +24,10 @@ class IdeaParameterDetail < ApplicationRecord
     rating.value
   end
 
+  def graphs
+    idea_parameter_graphs.where.not(body: nil || "")
+  end
+
   def mitigation_risk_score
     idea_parameter_recommendation_detail&.rating&.value
   end

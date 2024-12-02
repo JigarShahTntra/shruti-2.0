@@ -101,6 +101,10 @@ class StageGateJob
           puts "=========== Idea Parameter Recommendation Rating Started =========== \n\n"
           RatingJob.perform_async(recommendation.id, "IdeaParameterRecommendationDetail")
           puts "=========== Idea Parameter Recommendation Rating Completed =========== \n\n"
+
+          puts "=========== Recommendation Response Format Started =========== \n\n"
+          RecommendationResponseFormatJob.perform_async(recommendation.id)
+          puts "=========== Recommendation Response Format Completed =========== \n\n"
         end
       end
       puts "=========== #{stage_gate_parameter.name} Recommendation Processing Started =========== \n\n"

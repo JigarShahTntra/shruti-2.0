@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_30_111611) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_02_045452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_30_111611) do
     t.index ["parameter_recommendation_id"], name: "idx_on_parameter_recommendation_id_ed89907239"
   end
 
+  create_table "idea_recommendation_formats", force: :cascade do |t|
+    t.jsonb "body"
+    t.bigint "idea_parameter_recommendation_detail_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_parameter_recommendation_detail_id"], name: "idx_on_idea_parameter_recommendation_detail_id_36737e5a99"
+  end
+
   create_table "idea_stage_gates", force: :cascade do |t|
     t.bigint "idea_id", null: false
     t.bigint "stage_gate_id", null: false
@@ -85,6 +93,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_30_111611) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
+    t.jsonb "response_format"
     t.index ["stage_gate_parameter_id"], name: "index_parameter_recommendations_on_stage_gate_parameter_id"
   end
 
@@ -131,6 +140,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_30_111611) do
   add_foreign_key "idea_parameter_graphs", "stage_gate_parameter_graphs"
   add_foreign_key "idea_parameter_recommendation_details", "idea_parameter_details"
   add_foreign_key "idea_parameter_recommendation_details", "parameter_recommendations"
+  add_foreign_key "idea_recommendation_formats", "idea_parameter_recommendation_details"
   add_foreign_key "idea_stage_gates", "ideas"
   add_foreign_key "idea_stage_gates", "stage_gates"
   add_foreign_key "parameter_recommendations", "stage_gate_parameters"
