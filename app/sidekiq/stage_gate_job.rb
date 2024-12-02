@@ -65,6 +65,10 @@ class StageGateJob
         puts "=========== Graph Generation Started =========== \n\n"
         GraphGenerationJob.perform_async(idea_parameter.id)
         puts "=========== Graph Generation Completed =========== \n\n"
+
+        puts "=========== Left Panel Recommendation Generation Started =========== \n\n"
+        IdeaParameterRecommendationJob.perform_async(idea_parameter.id)
+        puts "=========== Left Panel Recommendation Generation Completed =========== \n\n"
       end
 
       puts "=========== #{stage_gate_parameter.name} Parameter Processing Completed =========== \n\n"
