@@ -1,5 +1,5 @@
 class IdeaParameterDetailSerializer < ActiveModel::Serializer
-  attributes :id, :name, :cname, :description, :risk_score, :mitigation_risk_score, :graphs
+  attributes :id, :name, :cname, :description, :risk_score, :mitigation_risk_score, :graphs, :recommendations
 
   attribute :shruti_recommendations
 

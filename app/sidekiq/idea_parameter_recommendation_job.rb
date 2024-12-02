@@ -1,8 +1,8 @@
-class IdeaRecommendationJob
+class IdeaParameterRecommendationJob
   include Sidekiq::Job
 
-  def perform(idea_id)
-    @idea = Idea.find_by(id: idea_id)
+  def perform(parameter_id)
+    @parameter = IdeaParameterDetail.find_by(id: parameter_id)
 
     puts "=========== Recommendation Creation Started =========== \n\n"
 
@@ -13,7 +13,7 @@ class IdeaRecommendationJob
     description = JSON.parse(prompt)
 
     description["recommendations"].each do |recom|
-      @idea.recommendations.create(recom)
+      @parameter.recommendations.create(recom)
     end
     puts "=========== Recommendation Creation Completed =========== \n\n"
   end
@@ -21,29 +21,10 @@ class IdeaRecommendationJob
   private
 
   def conversation
-    [
-      {
-        "role": "assistant",
-        "content": "You're an business analyst expert."
-      },
-      {
-        "role": "user",
-        "content": <<-PROMPT
-          On the basis of below description of the idea, provide me some advanced recommendations to consider in the Innovative Idea, Please provide the response in the strict format.
-
-          Description:
-          #{@idea.description}
-
-          #{described_fields}
-        PROMPT
-      }
-    ]
-  end
-
-  def described_fields
-    Idea::DESCRIPTIVE_FIELDS.map do |field|
-      "#{field.humanize} described by user \n " + @idea.send(field) if @idea.send(field).present? && @idea.send(field).length > 5
-    end.compact.join("\n")
+    @parameter.conversations.last.body << {
+      "role": "user",
+      "content": "On the basis of previous analysis, provide me some advanced 6 recommendations to consider in the parameter of #{@parameter.stage_gate_parameter.name}, Please provide the response in the strict format."
+    }
   end
 
   def format_options

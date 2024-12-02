@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :ideas, only: [ :index, :create, :show ] do
         get "export_pdf", to: "ideas#export_pdf"
-        resources :stage_gates
+        resources :stage_gates do
+          resources :idea_parameter_details, only: :show
+        end
         #   resources :criterias, only: [ :index, :show ] do
         #     get "fetch_criterias", on: :collection
         #   end
