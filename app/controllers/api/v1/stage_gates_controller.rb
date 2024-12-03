@@ -16,6 +16,8 @@ class Api::V1::StageGatesController < ::ApplicationController
   end
 
   def set_idea_stage_gate
+    return unless @idea
+
     @stage_gate = @idea.idea_stage_gates.find_by_cname(params[:id])
   end
 end
