@@ -29,7 +29,13 @@ class OpenAiService
         http.request(request)
       end
       puts JSON.parse(response.body)
-      JSON.parse(response.body)["choices"][0]["message"]["content"]
+      if !JSON.parse(response.body)["errors"].present?
+        JSON.parse(response.body)["choices"][0]["message"]["content"]
+      else
+        puts "===============================================Sleep 60 Seconds==============================================================================="
+        sleep 60
+        puts "===============================================Sleep 60 Seconds==============================================================================="
+      end
     else
       "No Conversations Present"
     end

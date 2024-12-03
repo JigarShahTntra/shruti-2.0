@@ -1,6 +1,6 @@
 class Idea < ApplicationRecord
   DESCRIPTIVE_FIELDS = %w[market_potential intellectual_property_potential technology_requirements compliance_aspect business_model]
-  has_many :idea_stage_gates
+  has_many :idea_stage_gates, dependent: :destroy
   has_many :stage_gates, through: :idea_stage_gates
   has_many :conversations, as: :conversationable, dependent: :destroy
   has_many :recommendations, as: :recommendable, dependent: :destroy

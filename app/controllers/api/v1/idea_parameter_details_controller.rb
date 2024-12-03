@@ -14,10 +14,14 @@ class Api::V1::IdeaParameterDetailsController < ::ApplicationController
   end
 
   def set_idea_stage_gate
+    return unless @idea
+
     @stage_gate = @idea.idea_stage_gates.find_by_cname(params[:stage_gate_id])
   end
 
   def set_idea_parameter_detail
+    return unless @stage_gate
+
     @idea_parameter_detail = @stage_gate.idea_parameter_details.find_by_cname(params[:id])
   end
 end

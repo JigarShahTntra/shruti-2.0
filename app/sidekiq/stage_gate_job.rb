@@ -23,7 +23,7 @@ class StageGateJob
     idea_stage_gate.stage_gate.stage_gate_parameters.each do |stage_gate_parameter|
       if stage_gate_parameter.name == "TAM, SAM, SOM Analysis"
         puts "=========== #{stage_gate_parameter.name} Parameter Processing Started =========== \n\n"
-        idea_parameter = idea_stage_gate.idea_parameter_details.create(stage_gate_parameter_id: stage_gate_parameter.id, idea_id: idea.id)
+        idea_parameter = idea_stage_gate.idea_parameter_details.find_or_create_by(stage_gate_parameter_id: stage_gate_parameter.id, idea_id: idea.id)
         description = idea.business_model_description&.description
         idea_parameter.update(description:)
         puts "=========== #{stage_gate_parameter.name} Parameter Processing Completed =========== \n\n"
