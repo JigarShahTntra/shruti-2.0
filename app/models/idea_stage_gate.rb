@@ -11,7 +11,7 @@ class IdeaStageGate < ApplicationRecord
   end
 
   def total_rating
-    idea_parameter_details.joins(:rating).sum("ratings.value").to_f / idea_parameter_details.count
+    (idea_parameter_details.joins(:rating).sum("ratings.value").to_f / idea_parameter_details.count).round
   end
 
   def cname
@@ -19,6 +19,6 @@ class IdeaStageGate < ApplicationRecord
   end
 
   def total_mitigation_rating
-    idea_parameter_details.joins(idea_parameter_recommendation_detail: :rating).sum("ratings.value").to_f / idea_parameter_details.count
+    (idea_parameter_details.joins(idea_parameter_recommendation_detail: :rating).sum("ratings.value").to_f / idea_parameter_details.count).round
   end
 end
