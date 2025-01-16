@@ -26,7 +26,7 @@ class IdeaParameterDetail < ApplicationRecord
   end
 
   def risk_score
-    rating.value.round
+    rating&.value&.round
   end
 
   def graphs
