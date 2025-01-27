@@ -4,11 +4,12 @@ class Api::V1::IdeaParameterDetailsController < ::ApplicationController
   before_action :set_idea_parameter_detail, only: [ :show ]
 
   def show
-    unless @idea
+    if @idea
+      render json: @idea_parameter_detail, message: "Idea Parameter Fetched Successfully"
+    else
       render json: { status: false }, message: "Idea have not been sent to process."
     end
 
-    render json: @idea_parameter_detail, message: "Idea Parameter Fetched Successfully"
   end
 
   private

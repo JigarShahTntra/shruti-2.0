@@ -2,19 +2,20 @@ class Api::V1::StageGatesController < ::ApplicationController
   before_action :set_idea
   before_action :set_idea_stage_gate, only: [ :show ]
   def index
-    unless @idea
+    if @idea
+      render json: @idea.idea_stage_gates, message: "Stage Gates Fetched Successfully"
+    else
       render json: { status: false }, message: "Idea have not been sent to process."
     end
-
-    render json: @idea.idea_stage_gates, message: "Stage Gates Fetched Successfully"
   end
 
   def show
-    unless @idea
+    if @idea
+      render json: @stage_gate, message: "Stage Gate Fetched Successfully"
+    else
       render json: { status: false }, message: "Idea have not been sent to process."
     end
 
-    render json: @stage_gate, message: "Stage Gate Fetched Successfully"
   end
 
   private
