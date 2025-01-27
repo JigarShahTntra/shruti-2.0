@@ -5,11 +5,14 @@ class Api::V1::IdeaParameterDetailsController < ::ApplicationController
 
   def show
     if @idea
-      render json: @idea_parameter_detail, message: "Idea Parameter Fetched Successfully"
+      if @idea.inprogress?
+        render json: { status: @idea.status }, message: "Idea is in inprogress."
+      else
+        render json: @idea_parameter_detail, message: "Idea Parameter Fetched Successfully"
+      end
     else
       render json: { status: false }, message: "Idea have not been sent to process."
     end
-
   end
 
   private

@@ -3,7 +3,11 @@ class Api::V1::StageGatesController < ::ApplicationController
   before_action :set_idea_stage_gate, only: [ :show ]
   def index
     if @idea
-      render json: @idea.idea_stage_gates, message: "Stage Gates Fetched Successfully"
+      if @idea.inprogress?
+        render json: { status: @idea.status }, message: "Idea is in inprogress."
+      else
+        render json: @idea.idea_stage_gates, message: "Stage Gates Fetched Successfully"
+      end
     else
       render json: { status: false }, message: "Idea have not been sent to process."
     end
@@ -11,7 +15,11 @@ class Api::V1::StageGatesController < ::ApplicationController
 
   def show
     if @idea
-      render json: @stage_gate, message: "Stage Gate Fetched Successfully"
+      if @idea.inprogress?
+        render json: { status: @idea.status }, message: "Idea is in inprogress."
+      else
+        render json: @stage_gate, message: "Stage Gate Fetched Successfully"
+      end
     else
       render json: { status: false }, message: "Idea have not been sent to process."
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_100618) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_27_152821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,6 +84,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_100618) do
     t.string "technology_requirements"
     t.string "compliance_aspect"
     t.string "business_model"
+    t.integer "status"
   end
 
   create_table "parameter_recommendations", force: :cascade do |t|
@@ -143,6 +144,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_100618) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "use_cases", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "pain_areas", array: true
+    t.bigint "idea_id", null: false
+    t.string "practice_component", array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_id"], name: "index_use_cases_on_idea_id"
+  end
+
   add_foreign_key "idea_parameter_details", "idea_stage_gates"
   add_foreign_key "idea_parameter_details", "ideas"
   add_foreign_key "idea_parameter_details", "stage_gate_parameters"
@@ -156,4 +168,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_100618) do
   add_foreign_key "parameter_recommendations", "stage_gate_parameters"
   add_foreign_key "stage_gate_parameter_graphs", "stage_gate_parameters"
   add_foreign_key "stage_gate_parameters", "stage_gates"
+  add_foreign_key "use_cases", "ideas"
 end

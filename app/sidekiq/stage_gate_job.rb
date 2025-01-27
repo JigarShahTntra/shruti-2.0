@@ -11,6 +11,7 @@ class StageGateJob
 
     puts "=========== Idea Fetching Started =========== \n\n"
     idea = Idea.find_by(id: idea_id)
+    idea.inprogress!
     puts "=========== Idea Fetched Successfully =========== \n\n"
 
     puts "=========== Process for #{stage_gate.name} Stage Gate Started =========== \n\n"
@@ -115,6 +116,7 @@ class StageGateJob
     end
     puts "=========== Parameter Processing Completed =========== \n\n"
     puts "=========== Process for #{stage_gate.name} Stage Gate Completed =========== \n\n"
+    idea.done!
   end
 
   private

@@ -4,6 +4,10 @@ class Idea < ApplicationRecord
   has_many :stage_gates, through: :idea_stage_gates
   has_many :conversations, as: :conversationable, dependent: :destroy
   has_many :recommendations, as: :recommendable, dependent: :destroy
+  enum status: {
+    done: 0,
+    inprogress: 1
+  }
   after_save :elaborate_idea, if: -> { !description_previous_change.nil? || !market_potential_previous_change.nil? || !intellectual_property_potential_previous_change.nil? || !technology_requirements_previous_change.nil? || !compliance_aspect_previous_change.nil? || !business_model_previous_change.nil? }
   after_save :run_gates, if: -> { !elaboration_previous_change.nil? }
 
